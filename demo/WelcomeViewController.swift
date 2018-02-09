@@ -24,12 +24,15 @@ class WelcomeViewController : UIViewController {
     
     @IBOutlet weak var ConnectButton: UIButton!
     @IBOutlet weak var ConnectionIdLabel: UILabel!
+    @IBOutlet weak var ErrorLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getAccessToken(completion: createUser)
         self.ConnectionIdLabel.text = Text
+        self.ErrorLabel.text = Text
         self.ConnectButton.isEnabled = false
+        self.ConnectButton.alpha = 0.5
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,8 +61,8 @@ class WelcomeViewController : UIViewController {
                 }
                 print("Validation Successful")
             case .failure(let error):
-                print("Custom error", error)
-                // return
+                self.ErrorLabel.text = error.localizedDescription
+                return
             }
             completion()
         }
@@ -80,17 +83,17 @@ class WelcomeViewController : UIViewController {
                 }
                 print("Validation Successful")
             case .failure(let error):
-                print("Custom error", error)
-                //return
+                self.ErrorLabel.text = error.localizedDescription
+                return
             }
             self.ConnectButton.isEnabled = true;
+            self.ConnectButton.alpha = 1.0
         }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         let nextScene =  segue.destination as! ViewController
         nextScene.url = "http://192.168.2.144:9080?user_id="+self.userId!+"&access_token="+self.clientAccessToken!
-        print("segue url: ", nextScene.url)
         nextScene.modelController = self.modelController
     }
     
