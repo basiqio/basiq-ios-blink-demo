@@ -11,23 +11,18 @@ import WebKit
 import SwiftyJSON
 
 class ViewController: UIViewController, WKNavigationDelegate {
-    var connectionId: String?
     var url: String!
-    
-    @IBOutlet weak var ResConnLabel: UILabel!
-    private var webView: WKWebView?
+    var webView: WKWebView?
     var modelController: ModelController!
+    
+    let CONNECTION_EVENT = "connection"
+    let CANCELLATION_EVENT = "cancellation"
     
     override func loadView() {
         webView = WKWebView()
-        //If you want to implement the delegate
         webView?.navigationDelegate = self
         view = webView
         loadWebView()
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
     
     func loadWebView(){
@@ -44,26 +39,34 @@ class ViewController: UIViewController, WKNavigationDelegate {
                     event = event.substring(to:(lastIndex.lowerBound))
                 }
                 switch event{
-                case "connection":
+                case CONNECTION_EVENT:
                     let jsonvalue = urlStr.substring(from: "basiq://connection/".endIndex)
                     if let dataFromString = jsonvalue.data(using: .utf8) {
                         let json = try? JSON(data: dataFromString)
-                        let connectionId = json?["data"]["id"]
-                        if connectionId != JSON.null {
-                            self.connectionId = connectionId?.string
-                            modelController.connectionId = self.connectionId ?? ""
+                        if let connectionId = json?["data"]["id"] {
+                            modelController.setConnectionID(connectionId: connectionId.string!)
+                            self.dismiss(animated: true)
+                            decisionHandler(.cancel)
+                        }else{
+                            modelController.setError(err: "Cannot parse connectionId from request data!")
                             self.dismiss(animated: true)
                             decisionHandler(.cancel)
                         }
                     }else{
-                         decisionHandler(.allow)
+                        modelController.setError(err: "Cannot parse WebView request data!")
+                        self.dismiss(animated: true)
+                        decisionHandler(.cancel)
                     }
-                case "cancellation":
+                case CANCELLATION_EVENT:
                     self.dismiss(animated: true)
                     decisionHandler(.cancel)
                 default:
                     decisionHandler(.allow)
                 }
+            }else{
+                modelController.setError(err: "Cannot parse WebView request URL!")
+                self.dismiss(animated: true)
+                decisionHandler(.cancel)
             }
         }else{
             //when user interacts with webview
