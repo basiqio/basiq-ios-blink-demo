@@ -1,7 +1,6 @@
-# basiq-ios-blink-demo
 # Basiq Blink iOS integration
 
-##Prerequisite
+## Prerequisite
 
 Installed Xcode version > 8.2
 Installed Swift 3
