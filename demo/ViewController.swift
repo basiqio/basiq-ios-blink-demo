@@ -15,9 +15,11 @@ class ViewController: UIViewController, WKNavigationDelegate {
     var webView: WKWebView?
     var modelController: ModelController!
     
-    let CONNECTION_EVENT = "connection"
-    let CANCELLATION_EVENT = "cancellation"
-    
+    struct Constants{
+        static let CONNECTION_EVENT = "connection"
+        static let CANCELLATION_EVENT = "cancellation"
+    }
+
     override func loadView() {
         webView = WKWebView()
         webView?.navigationDelegate = self
@@ -39,25 +41,31 @@ class ViewController: UIViewController, WKNavigationDelegate {
                     event = event.substring(to:(lastIndex.lowerBound))
                 }
                 switch event{
-                case CONNECTION_EVENT:
+                case Constants.CONNECTION_EVENT:
                     let jsonvalue = urlStr.substring(from: "basiq://connection/".endIndex)
                     if let dataFromString = jsonvalue.data(using: .utf8) {
                         let json = try? JSON(data: dataFromString)
-                        if let connectionId = json?["data"]["id"] {
-                            modelController.setConnectionID(connectionId: connectionId.string!)
-                            self.dismiss(animated: true)
-                            decisionHandler(.cancel)
+                        if let success = json?["success"], success.boolValue{
+                            if let connectionId = json?["data"]["id"],connectionId.string != nil {
+                                modelController.setConnectionID(connectionId: connectionId.string!)
+                                self.dismiss(animated: true)
+                                decisionHandler(.cancel)
+                            }else{
+                                modelController.setError(err: "Cannot parse connectionId from request data!")
+                                self.dismiss(animated: true)
+                                decisionHandler(.cancel)
+                            }
                         }else{
-                            modelController.setError(err: "Cannot parse connectionId from request data!")
-                            self.dismiss(animated: true)
-                            decisionHandler(.cancel)
+                            //This should be handled on webview
+                            print("Message should be disaplyed on web-view")
+                            decisionHandler(.allow)
                         }
                     }else{
                         modelController.setError(err: "Cannot parse WebView request data!")
                         self.dismiss(animated: true)
                         decisionHandler(.cancel)
                     }
-                case CANCELLATION_EVENT:
+                case Constants.CANCELLATION_EVENT:
                     self.dismiss(animated: true)
                     decisionHandler(.cancel)
                 default:
