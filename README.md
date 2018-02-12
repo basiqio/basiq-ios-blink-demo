@@ -9,6 +9,7 @@ Installed Swift 3
 Package manager is CocoaPods
 
 ```sudo gem install cocoapods```
+
 ```pod install```
 
 ## Running
