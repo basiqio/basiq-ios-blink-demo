@@ -18,13 +18,13 @@ To open application in Xcode type from command-line
 
 ```open demo.xcworkspace```
 
-The file should hold the values of the urls of the webview server, and your client server that will
-be responsible for creating a user and fetching the access token.
+Configuration variables which you should have set are the urls of the webview server, and your client server that will
+be responsible for creating a user and fetching the access token. You can check them in action [here](https://github.com/basiqio/basiq-ios-blink-demo/blob/master/demo/WelcomeViewController.swift)
 
-Example:
+Snippet from file:
 ```
-api_url=http://0.0.0.0
-views_url=http://js.basiq.io/index.html
+var LocalServerHost = "http://0.0.0.0"
+var BasiqWebViewEndpoint = "http://js.basiq.io/index.html"
 ```
 
 ## Server requirements
