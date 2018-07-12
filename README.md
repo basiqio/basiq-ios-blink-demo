@@ -18,6 +18,14 @@ To open application in Xcode type from command-line
 
 ```open demo.xcworkspace```
 
+The file should hold the values of the urls of the webview server, and your client server that will
+be responsible for creating a user and fetching the access token.
+
+Example:
+```
+api_url=http://0.0.0.0
+views_url=http://js.basiq.io/index.html
+```
 
 ## Server requirements
 
