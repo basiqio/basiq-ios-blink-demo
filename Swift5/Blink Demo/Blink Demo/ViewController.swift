@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var uiLabelInfo: UILabel!
     @IBOutlet weak var uiButtonConnect: UIButton!
     @IBOutlet weak var uiLabelError: UILabel!
+    @IBOutlet weak var uiActivityIndicator: UIActivityIndicatorView!
     
     var Text = String()
     var userId: String?
@@ -27,7 +28,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         modelController = ModelController()
         getAccessToken(completion: createUser)
-        self.uiLabelInfo.text = Text
+        self.uiLabelInfo.text = Text != "" ? Text : "Fetching token..."
         self.uiLabelError.text = Text
         self.uiButtonConnect.isEnabled = false
         self.uiButtonConnect.alpha = 0.5
@@ -54,8 +55,10 @@ class ViewController: UIViewController {
     }
     
     func getAccessToken(completion: @escaping ()->()){
+        self.uiActivityIndicator.startAnimating()
         let clientData: Parameters = ["client_id": "in12ij3n1onb12"]
         AF.request(self.LocalServerHost + "/access_token", method: .post, parameters: clientData, encoding: JSONEncoding.default, headers: ["Content-Type" :"application/json"]).validate().responseJSON { response in
+            self.uiActivityIndicator.stopAnimating()
             switch response.result {
             case .success:
                 if response.value is NSNull {
