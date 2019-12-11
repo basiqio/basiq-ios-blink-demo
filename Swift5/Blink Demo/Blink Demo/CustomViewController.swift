@@ -15,7 +15,7 @@ class CustomViewController: UIViewController, WKNavigationDelegate {
     
     @IBOutlet weak var wkWebView: WKWebView!
     
-    var url: String!
+    var url: String! = ""
     var modelController: ModelController!
     
     struct Constants{
@@ -23,22 +23,23 @@ class CustomViewController: UIViewController, WKNavigationDelegate {
         static let CANCELLATION_EVENT = "cancellation"
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
     
     override func loadView() {
-        wkWebView?.navigationDelegate = self
+        super.loadView()
+//        wkWebView?.navigationDelegate = self // TODO: Errors.
         view = wkWebView
         loadWebView()
     }
     
     func loadWebView(){
-        let nsurl = NSURL (string: self.url);
-        let requestObj = NSURLRequest(url: nsurl as! URL);
-        self.wkWebView!.load(requestObj as URLRequest);
+        DispatchQueue.main.async {
+            self.wkWebView.load(URLRequest(url:URL(string:self.url)!));
+        }
+        
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

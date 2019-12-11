@@ -103,20 +103,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdp-kQ-EYi">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="10" y="10" width="394" height="788"/>
+                                <color key="backgroundColor" red="0.36078431372549019" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="bdp-kQ-EYi" firstAttribute="top" secondItem="F29-uG-KSE" secondAttribute="top" id="3P3-wX-K6I"/>
-                            <constraint firstItem="F29-uG-KSE" firstAttribute="trailing" secondItem="bdp-kQ-EYi" secondAttribute="trailing" id="Xd4-Hl-oHS"/>
-                            <constraint firstItem="bdp-kQ-EYi" firstAttribute="leading" secondItem="F29-uG-KSE" secondAttribute="leading" id="rae-u2-pCX"/>
-                            <constraint firstItem="F29-uG-KSE" firstAttribute="bottom" secondItem="bdp-kQ-EYi" secondAttribute="bottom" id="u5O-be-6kw"/>
+                            <constraint firstItem="bdp-kQ-EYi" firstAttribute="top" secondItem="F29-uG-KSE" secondAttribute="top" constant="10" id="3P3-wX-K6I"/>
+                            <constraint firstItem="F29-uG-KSE" firstAttribute="trailing" secondItem="bdp-kQ-EYi" secondAttribute="trailing" constant="10" id="Xd4-Hl-oHS"/>
+                            <constraint firstItem="bdp-kQ-EYi" firstAttribute="leading" secondItem="F29-uG-KSE" secondAttribute="leading" constant="10" id="rae-u2-pCX"/>
+                            <constraint firstItem="F29-uG-KSE" firstAttribute="bottom" secondItem="bdp-kQ-EYi" secondAttribute="bottom" constant="10" id="u5O-be-6kw"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="F29-uG-KSE"/>
                     </view>

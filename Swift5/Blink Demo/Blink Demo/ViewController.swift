@@ -50,7 +50,7 @@ class ViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         let nextScene =  segue.destination as! CustomViewController
-        nextScene.url = self.BasiqWebViewEndpoint + "?user_id="+self.userId!+"&access_token="+self.clientAccessToken!
+        nextScene.url = self.BasiqWebViewEndpoint + "?user_id=" + self.userId! + "&access_token=" + self.clientAccessToken!
         nextScene.modelController = self.modelController
     }
     
